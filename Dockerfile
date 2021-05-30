@@ -7,23 +7,6 @@ RUN apt-get update -y && \
     apt-get clean
     
 RUN rm -rf /var/lib/apt/lists/*
-
-RUN docker volume create gitlab-runner-config
-
-RUN docker run -d --name gitlab-runner --restart always \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -v gitlab-runner-config:/etc/gitlab-runner \
-    gitlab/gitlab-runner:latest
-    
-RUN gitlab-runner register -n \
-  --url https://gitlab.fdmci.hva.nl/ \
-  --registration-token zzPduMXszxuDmMvSEwQ_ \
-  --executor docker \
-  --description "dndrunner" \
-  --docker-image "docker:19.03.12" \
-  --docker-privileged \
-  --docker-volumes "/certs/client"
-
     
 
     
